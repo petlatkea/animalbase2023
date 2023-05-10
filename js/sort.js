@@ -5,16 +5,24 @@ let sortingBy = "name";
 let sortingDirection = "asc";
 
 function selectSort(event) {
-  const sortBy = event.target.dataset.sortBy;
-  const sortDir = event.target.dataset.sortDirection;
+  const heading = event.target;
 
-  // TODO: Show status in UI
+  const sortBy = heading.dataset.sortBy;
+  const sortDir = heading.dataset.sortDirection;
+
+  // Show status in UI
+  // find "old" selected element, and remove .selected
+  const oldHeading = document.querySelector("[data-action=sort].selected");
+  oldHeading?.classList.remove("selected");
+
+  // indicate active sort
+  heading.classList.add("selected");
 
   // Toggle direction in ui
   if(sortDir === "asc") {
-    event.target.dataset.sortDirection = "desc";
+    heading.dataset.sortDirection = "desc";
   } else {
-    event.target.dataset.sortDirection = "asc";
+    heading.dataset.sortDirection = "asc";
   }
 
   setSort(sortBy, sortDir);
