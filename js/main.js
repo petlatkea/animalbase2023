@@ -1,7 +1,5 @@
 "use strict";
-
-const endPoint = "https://animalbase2023-default-rtdb.europe-west1.firebasedatabase.app/";
-
+import { getAllAnimals } from "./rest-api.js";
 window.addEventListener("load", start);
 
 async function start() {
@@ -12,21 +10,3 @@ async function start() {
   console.log(animals);
 }
 
-async function getAllAnimals() {
-  const response = await fetch(endPoint+"/animals.json");
-  const originalJson = await response.json();
-  const data = prepareData(originalJson);
-
-  return data;
-}
-
-function prepareData(listOfObjects) {
-  const arrayFromObjects = [];
-  
-  for (const object in listOfObjects) {
-    const post = listOfObjects[object];
-    post.id = object;
-    arrayFromObjects.push(post);
-  }
-  return arrayFromObjects;
-}
