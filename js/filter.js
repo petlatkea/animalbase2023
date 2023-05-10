@@ -16,7 +16,7 @@ function setFilter(filter) {
 }
 
 function filterList(animals) {
-  return animals.filter(animal => currentFilter === "*" || animal.type === currentFilter);
+  return animals.filter(animal => currentFilter === "*" || currentFilter.includes(":")?animal[currentFilter.split(":")[0]]===currentFilter.split(":")[1]:animal[currentFilter]); 
 }
 
 async function displayFilteredList() {
