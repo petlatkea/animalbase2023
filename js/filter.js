@@ -1,5 +1,4 @@
-import { getAllAnimals } from "./rest-api.js";
-import { displayList } from "./table.js";
+import { displayUpdatedList} from "./main.js";
 
 let currentFilter = "*";
 
@@ -8,7 +7,7 @@ function selectFilter(event) {
   console.log(`User selected ${filter}`);
 
   setFilter(filter);
-  displayFilteredList();
+  displayUpdatedList();
 }
 
 function setFilter(filter) {
@@ -19,10 +18,4 @@ function filterList(animals) {
   return animals.filter(animal => currentFilter === "*" || currentFilter.includes(":")?animal[currentFilter.split(":")[0]]===currentFilter.split(":")[1]:animal[currentFilter]); 
 }
 
-async function displayFilteredList() {
-  const allAnimals = await getAllAnimals();
-  const filteredList = filterList(allAnimals);
-  displayList(filteredList);
-}
-
-export {selectFilter}
+export {selectFilter, filterList}

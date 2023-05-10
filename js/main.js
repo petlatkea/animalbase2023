@@ -1,21 +1,17 @@
 "use strict";
 import { getAllAnimals } from "./rest-api.js";
 import { displayList } from "./table.js";
-import { selectFilter } from "./filter.js";
-import { selectSort } from "./sort.js";
+import { selectFilter, filterList } from "./filter.js";
+import { selectSort, sortList } from "./sort.js";
 
 
 window.addEventListener("load", start);
 
-async function start() {
+function start() {
   console.log("JavaScript is running");
   initializeActionButtons();
 
-  const animals = await getAllAnimals();
-
-  console.log(animals);
-
-  displayList(animals);
+  displayUpdatedList();
 }
 
 function initializeActionButtons() {
@@ -26,3 +22,15 @@ function initializeActionButtons() {
   .forEach(button => button.addEventListener("click", selectSort));
 }
 
+async function displayUpdatedList() {
+  const animals = await getAllAnimals();
+
+  console.log(animals);
+  const sortedList = sortList(animals);
+  const filteredList = filterList(sortedList);
+  // TODO: Search list
+
+  displayList(filteredList);
+}
+
+export {displayUpdatedList};
