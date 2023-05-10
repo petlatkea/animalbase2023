@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animalbase 2023</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <main>
+      <h1>Animals 2023</h1>
+
+      <p>
+        Filter:
+        <button class="filter" data-action="filter" data-filter="cat">Only Cats</button>
+        <button class="filter" data-action="filter" data-filter="dog">Only Dogs</button>
+        <button class="filter" data-action="filter" data-filter="star">Only Stars</button>
+        <button class="filter" data-action="filter" data-filter="*">all</button>
+      </p>
+
+      <hr />
+
+      <table id="list">
+        <thead>
+          <tr id="sorting">
+            <th data-action="sort" data-sort-direction="asc" data-sort-by="star">Star</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort-by="name">Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort-by="type">Type</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort-by="desc">Description</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort-by="age">Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- animal template will be copied and inserted here -->
+        </tbody>
+      </table>
+    </main>
+
+    <template id="animal">
+      <tr>
+        <td data-field="star">☆</td>
+        <td data-field="name">NAME</td>
+        <td data-field="type">TYPE</td>
+        <td data-field="desc">DESCRIPTION</td>
+        <td data-field="age">AGE</td>
+      </tr>
+    </template>
+
+    <script src="js/main.js" type="module"></script>
+  </body>
+</html>
