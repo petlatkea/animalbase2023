@@ -1,50 +1,52 @@
-[
-  {
-    "name": "Mia V",
-    "desc": "black",
-    "type": "cat",
-    "age": 13,
-    "star": true,
-    "winner": false
-  },
-  {
-    "name": "Mandu",
-    "desc": "growling",
-    "type": "cat",
-    "age": 13,
-    "star": false,
-    "winner": false
-  },
-  {
-    "name": "Toothless",
-    "desc": "trained",
-    "type": "dragon",
-    "age": 25,
-    "star": false,
-    "winner": true
-  },
-  {
-    "name": "Scoby Doo",
-    "desc": "wondering",
-    "type": "dog",
-    "age": 58,
-    "star": false,
-    "winner": false
-  },
-  {
-    "name": "Pluto",
-    "desc": "confused",
-    "type": "dog",
-    "age": 90,
-    "star": false,
-    "winner": true
-  },
-  {
-    "name": "Horsey",
-    "desc": "horsing",
-    "type": "horse",
-    "age": 10,
-    "star": false,
-    "winner": false
+{
+  "animals": {
+    "00": {
+      "name": "Mia V",
+      "desc": "black",
+      "type": "cat",
+      "age": 13,
+      "star": true,
+      "winner": false
+    },
+    "01": {
+      "name": "Mandu",
+      "desc": "growling",
+      "type": "cat",
+      "age": 13,
+      "star": false,
+      "winner": false
+    },
+    "02": {
+      "name": "Toothless",
+      "desc": "trained",
+      "type": "dragon",
+      "age": 25,
+      "star": false,
+      "winner": true
+    },
+    "03": {
+      "name": "Scoby Doo",
+      "desc": "wondering",
+      "type": "dog",
+      "age": 58,
+      "star": false,
+      "winner": false
+    },
+    "04": {
+      "name": "Pluto",
+      "desc": "confused",
+      "type": "dog",
+      "age": 90,
+      "star": false,
+      "winner": true
+    },
+    "05": {
+      "name": "Horsey",
+      "desc": "horsing",
+      "type": "horse",
+      "age": 10,
+      "star": false,
+      "winner": false
+    }
   }
-]
+}
