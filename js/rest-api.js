@@ -4,20 +4,12 @@ let allAnimals = [];
 let lastFetch = 0;
 
 async function getAllAnimals() {
-  performance.mark("fetch-started")
-
   const now = Date.now();
   const timePassedSinceLastFetch = now - lastFetch;
   // Only fetch if more than 10 seconds has passed since last fetch
   if( timePassedSinceLastFetch > 10_000) {  // <- hardcoded time - should maybe be something different
     await refetchAllAnimals();
   }
-  performance.mark("fetch-completed")
-
-  // NOTE: privacy.reduceTimerPrecision must be off/false for anything to be measured at all ...
-  const result = performance.measure("fetching", "fetch-started", "fetch-completed");
-
-  console.log("optimized get took: " + result.duration + " milliseconds");
 
   return allAnimals;
 }
@@ -40,4 +32,17 @@ function prepareData(listOfObjects) {
   return arrayFromObjects;
 }
 
-export {getAllAnimals};
+
+async function createAnimal(animal) {
+  const json = JSON.stringify(animal);
+	const response = await fetch(endPoint+"animals.json", {
+		method: "POST",
+		body: json,
+	});
+
+  refetchAllAnimals();
+  // NOTE: Should we return the newly created id?
+  return response.ok;
+}
+
+export {getAllAnimals, createAnimal};

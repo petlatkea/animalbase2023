@@ -18,7 +18,7 @@ function selectSort(event) {
   heading.classList.add("selected");
 
   // Toggle direction in ui
-  if(sortDir === "asc") {
+  if (sortDir === "asc") {
     heading.dataset.sortDirection = "desc";
   } else {
     heading.dataset.sortDirection = "asc";
@@ -35,7 +35,8 @@ function setSort(sortBy, sortDir) {
 }
 
 function sortList(animals) {
-  return animals.sort((a, b) => (a[sortingBy] == b[sortingBy] ? 0 : a[sortingBy] > b[sortingBy] ? sortingDirection==="asc"?1:-1 : sortingDirection==="asc"?-1:1));
+  const order = sortingDirection === "asc" ? 1 : -1;
+  return animals.sort((a, b) => (a[sortingBy] == b[sortingBy] ? 0 : a[sortingBy] > b[sortingBy] ? order : -order));
 }
 
 export { selectSort, sortList };

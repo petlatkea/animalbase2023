@@ -56,3 +56,10 @@ main {
 #list td[data-field=winner] {
   text-align: center;
 }
+
+form#create-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px;
+  justify-items: start;
+}
