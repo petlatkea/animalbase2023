@@ -4,7 +4,7 @@ let allAnimals = [];
 let lastFetch = 0;
 
 async function getAllAnimals() {
-  const start = performance.now();
+  performance.mark("fetch-started")
 
   const now = Date.now();
   const timePassedSinceLastFetch = now - lastFetch;
@@ -12,9 +12,12 @@ async function getAllAnimals() {
   if( timePassedSinceLastFetch > 10_000) {  // <- hardcoded time - should maybe be something different
     await refetchAllAnimals();
   }
-  const end = performance.now();
+  performance.mark("fetch-completed")
 
-  console.log("optimized get took: " + (end-start) + " milliseconds");
+  // NOTE: privacy.reduceTimerPrecision must be off/false for anything to be measured at all ...
+  const result = performance.measure("fetching", "fetch-started", "fetch-completed");
+
+  console.log("optimized get took: " + result.duration + " milliseconds");
 
   return allAnimals;
 }
