@@ -3,7 +3,7 @@ import { getAllAnimals } from "./rest-api.js";
 import { displayList } from "./table.js";
 import { selectFilter, filterList } from "./filter.js";
 import { selectSort, sortList } from "./sort.js";
-
+import { selectSearch, searchList } from "./search.js";
 
 window.addEventListener("load", start);
 
@@ -15,22 +15,26 @@ function start() {
 }
 
 function initializeActionButtons() {
-  document.querySelectorAll("[data-action='filter']")
-  .forEach(button => button.addEventListener("click", selectFilter));
+  document.querySelectorAll("[data-action='filter']").forEach(button => button.addEventListener("click", selectFilter));
 
-  document.querySelectorAll("[data-action='sort']")
-  .forEach(button => button.addEventListener("click", selectSort));
+  document.querySelectorAll("[data-action='sort']").forEach(button => button.addEventListener("click", selectSort));
+
+  document.querySelectorAll("[data-action='search']").forEach(field => {
+    field.addEventListener("search", selectSearch); // Non-standard, but included just in case
+    field.addEventListener("blur", selectSearch);
+    field.addEventListener("change", selectSearch);
+    field.addEventListener("keyup", selectSearch);
+  });
 }
 
 async function displayUpdatedList() {
   const animals = await getAllAnimals();
 
-  console.log(animals);
   const sortedList = sortList(animals);
   const filteredList = filterList(sortedList);
-  // TODO: Search list
+  const searchedList = searchList(filteredList);
 
-  displayList(filteredList);
+  displayList(searchedList);
 }
 
-export {displayUpdatedList};
+export { displayUpdatedList };
