@@ -50,15 +50,16 @@
       <button id="btn-create" data-action="create">Create new...</button>
     </main>
 
-    <dialog open>
+    <dialog id="create-dialog">
       <h1>Create new animal</h1>
-      <form action="" id="create-form">
-        <label for="create-name">Name:</label> <input type="text" id="create-name" name="name">
-        <label for="create-name">Type:</label> <input type="text" id="create-type" name="type">
+      <form action="" method="dialog" id="create-form">
+        <label for="create-name">Name:</label> <input type="text" id="create-name" name="name" placeholder="The animal's name - e.g. John">
+        <label for="create-name">Type:</label> <input type="text" id="create-type" name="type" placeholder="The animal's type - e.g. dog">
         <label for="create-name">Description:</label> <input type="text" id="create-desc" name="desc">
         <label for="create-name">Age:</label> <input type="number" id="create-age" name="age">
         <label for="create-name">Star:</label> <input type="checkbox" id="create-star" name="star">
         <label for="create-name">Winner:</label> <input type="checkbox" id="create-winner" name="winner">
+        <button>Create</button>
       </form>
 
     </dialog>  

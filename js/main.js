@@ -4,6 +4,7 @@ import { displayList } from "./table.js";
 import { selectFilter, filterList } from "./filter.js";
 import { selectSort, sortList } from "./sort.js";
 import { selectSearch, searchList } from "./search.js";
+import { showCreateDialog } from "./create.js";
 
 window.addEventListener("load", start);
 
@@ -25,6 +26,8 @@ function initializeActionButtons() {
     field.addEventListener("change", selectSearch);
     field.addEventListener("keyup", selectSearch);
   });
+
+  document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", showCreateDialog));
 }
 
 async function displayUpdatedList() {

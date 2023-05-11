@@ -1,7 +1,7 @@
 const endPoint = "https://animalbase2023-default-rtdb.europe-west1.firebasedatabase.app/";
 
 async function getAllAnimals() {
-  const response = await fetch(endPoint+"/animals.json");
+  const response = await fetch(endPoint+"animals.json");
   const originalJson = await response.json();
   const data = prepareData(originalJson);
 
@@ -19,4 +19,16 @@ function prepareData(listOfObjects) {
   return arrayFromObjects;
 }
 
-export {getAllAnimals};
+
+async function createAnimal(animal) {
+  const json = JSON.stringify(animal);
+	const response = await fetch(endPoint+"animals.json", {
+		method: "POST",
+		body: json,
+	});
+
+  // NOTE: Should we return the newly created id?
+  return response.ok;
+}
+
+export {getAllAnimals, createAnimal};
