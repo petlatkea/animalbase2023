@@ -1,4 +1,5 @@
 import { showUpdateDialog, toggleProperty } from "./update.js";
+import { showDeleteDialog } from "./delete.js";
 
 function displayList(animals) {
   document.querySelector("#list tbody").innerHTML = "";
@@ -29,15 +30,14 @@ function displayAnimal(animal) {
     clone.querySelector("[data-field=winner]").textContent = "";
   }
 
-  clone.querySelector("[data-field=winner]").addEventListener("click", (event) => {
-    event.stopPropagation();
-    toggleProperty(animal,"winner");
-  } );
-  clone.querySelector("[data-field=star]").addEventListener("click", (event) => {
-    event.stopPropagation();
-    toggleProperty(animal,"star");
-  } );
-  clone.querySelector("tr").addEventListener("click", () => showUpdateDialog(animal));
+  clone.querySelector("tr").addEventListener("click", (event) => {
+    const action = event.target.dataset.action ?? "update";
+    switch(action) {
+      case "update": showUpdateDialog(animal); break;
+      case "toggle": toggleProperty(animal, event.target.dataset.field); break;
+      case "delete": showDeleteDialog(animal); break;
+    }
+  });
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);

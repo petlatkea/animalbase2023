@@ -45,7 +45,7 @@ main {
   border-right: rgb(240, 249, 255) 1px dotted;
 }
 
-#list tbody tr:nth-child(even) td {
+#list tbody tr:nth-child(even) td:not([data-action=delete]) {
   border-right: rgb(171, 219, 252) 1px dotted;
 }
 
@@ -60,6 +60,24 @@ main {
 
 #list td[data-field=winner] {
   text-align: center;
+}
+
+#list td[data-action=delete] {
+  visibility: hidden;
+  border-right: none;
+  transition: scale 300ms;
+}
+
+#list tbody tr:hover td {
+  visibility: visible;
+}
+
+#list td[data-action=delete]:hover {
+  scale: 1.1;
+}
+
+#list tr:has(td[data-action=delete]:hover) td {
+  background-color: rgb(255, 148, 148);
 }
 
 form#create-form,

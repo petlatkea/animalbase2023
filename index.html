@@ -18,7 +18,7 @@
         <button class="filter" data-action="filter" data-filter="type:dog">Only Dogs</button>
         <button class="filter" data-action="filter" data-filter="star">Only Stars</button>
         <button class="filter" data-action="filter" data-filter="*">all</button>
-        <button class="filter" data-action="filter" data-filter="age:13">only 13</button>
+        <!-- <button class="filter" data-action="filter" data-filter="age:13">only 13</button> -->
       </p>
       <p>
         Search: <input type="search" name="searchField" id="searchField" data-action="search">
@@ -47,6 +47,9 @@
           <!-- animal template will be copied and inserted here -->
         </tbody>
       </table>
+     
+      <hr />
+
       <button id="btn-create" data-action="create">Create new...</button>
     </main>
 
@@ -78,14 +81,24 @@
 
     </dialog> 
 
+    <dialog id="delete-dialog">
+      <h1>Delete animal?</h1>
+      <p>Are you sure you want to delete the animal "<span id="delete-name"></span>"?</p>
+      <form action="" method="dialog" id="delete-form">
+        <button id="delete-cancel" type="button">Cancel</button>
+        <button id="delete-confirm" type="submit">Delete</button>
+      </form>
+    </dialog> 
+
     <template id="animal">
       <tr>
-        <td data-field="winner">🏆</td>
-        <td data-field="star">☆</td>
+        <td data-action="toggle" data-field="winner">🏆</td>
+        <td data-action="toggle" data-field="star">☆</td>
         <td data-field="name">NAME</td>
         <td data-field="type">TYPE</td>
         <td data-field="desc">DESCRIPTION</td>
         <td data-field="age">AGE</td>
+        <td data-action="delete">🗑️</td>
       </tr>
     </template>
 

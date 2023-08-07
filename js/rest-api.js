@@ -72,4 +72,14 @@ async function patchAnimal(animal, property, value) {
   return response.ok;
 }
 
-export {getAllAnimals, createAnimal, updateAnimal, patchAnimal};
+async function deleteAnimal(animal) {
+  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+    method: "DELETE"
+  });
+
+  refetchAllAnimals();
+
+  return response.ok;
+}
+
+export {getAllAnimals, createAnimal, updateAnimal, patchAnimal, deleteAnimal};
