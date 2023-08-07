@@ -15,7 +15,7 @@ function setFilter(filter) {
 }
 
 function filterList(animals) {
-  return animals.filter(animal => currentFilter === "*" || currentFilter.includes(":")?animal[currentFilter.split(":")[0]]===currentFilter.split(":")[1]:animal[currentFilter]); 
+  return animals.filter(animal => currentFilter === "*" || currentFilter.includes(":")?animal[currentFilter.split(":")[0]]==currentFilter.split(":")[1]:animal[currentFilter]); 
 }
 
 export {selectFilter, filterList}
