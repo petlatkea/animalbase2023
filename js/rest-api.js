@@ -1,4 +1,4 @@
-const endPoint = "https://animalbase2023-default-rtdb.europe-west1.firebasedatabase.app/";
+const endPoint = "http://localhost:4000/animals";
 
 let allAnimals = [];
 let lastFetch = 0;
@@ -15,25 +15,15 @@ async function getAllAnimals() {
 }
 
 async function refetchAllAnimals() {
-  const response = await fetch(endPoint+"/animals.json");
+  const response = await fetch(`${endPoint}/`);
   const originalJson = await response.json();
-  allAnimals = prepareData(originalJson);
+  allAnimals = originalJson;
+
   lastFetch = Date.now();
 }
 
-function prepareData(listOfObjects) {
-  const arrayFromObjects = [];
-  
-  for (const object in listOfObjects) {
-    const post = listOfObjects[object];
-    post.id = object;
-    arrayFromObjects.push(post);
-  }
-  return arrayFromObjects;
-}
-
 async function getAnimal(id) {
-  const response = await fetch(`${endPoint}animals/${id}.json`, {
+  const response = await fetch(`${endPoint}/${id}`, {
 		method: "GET"
 	});
 
@@ -44,8 +34,11 @@ async function getAnimal(id) {
 
 async function createAnimal(animal) {
   const json = JSON.stringify(animal);
-	const response = await fetch(endPoint+"animals.json", {
+	const response = await fetch(`${endPoint}/`, {
 		method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
 		body: json,
 	});
 
@@ -56,8 +49,11 @@ async function createAnimal(animal) {
 
 async function updateAnimal(animal) {
   const json = JSON.stringify(animal);
-  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+  const response = await fetch(`${endPoint}/${animal.id}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: json
   });
 
@@ -71,8 +67,11 @@ async function patchAnimal(animal, property, value) {
   dataObject[property] = value;
 
   const json = JSON.stringify(dataObject);
-  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+  const response = await fetch(`${endPoint}/${animal.id}`, {
     method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: json
   });
   
@@ -82,7 +81,7 @@ async function patchAnimal(animal, property, value) {
 }
 
 async function deleteAnimal(animal) {
-  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+  const response = await fetch(`${endPoint}/${animal.id}`, {
     method: "DELETE"
   });
 
