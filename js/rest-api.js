@@ -49,7 +49,7 @@ async function createAnimal(animal) {
 		body: json,
 	});
 
-  refetchAllAnimals();
+  await refetchAllAnimals();
   // NOTE: Should we return the newly created id?
   return response.ok;
 }
@@ -61,7 +61,7 @@ async function updateAnimal(animal) {
     body: json
   });
 
-  refetchAllAnimals();
+  await refetchAllAnimals();
 
   return response.ok;
 }
@@ -76,7 +76,7 @@ async function patchAnimal(animal, property, value) {
     body: json
   });
   
-  refetchAllAnimals();
+  await refetchAllAnimals();
 
   return response.ok;
 }
@@ -86,7 +86,7 @@ async function deleteAnimal(animal) {
     method: "DELETE"
   });
 
-  refetchAllAnimals();
+  await refetchAllAnimals();
 
   return response.ok;
 }
