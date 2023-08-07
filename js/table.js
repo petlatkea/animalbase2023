@@ -1,3 +1,5 @@
+import { showUpdateDialog } from "./update.js";
+
 function displayList(animals) {
   document.querySelector("#list tbody").innerHTML = "";
   animals.forEach(displayAnimal);
@@ -26,6 +28,8 @@ function displayAnimal(animal) {
   } else {
     clone.querySelector("[data-field=winner]").textContent = "";
   }
+
+  clone.querySelector("tr").addEventListener("click", () => showUpdateDialog(animal));
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);

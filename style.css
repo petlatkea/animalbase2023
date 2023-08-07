@@ -49,6 +49,11 @@ main {
   border-right: rgb(171, 219, 252) 1px dotted;
 }
 
+#list tbody tr:hover td {
+  cursor: pointer;
+  background-color: rgb(255, 243, 195);
+}
+
 #list td[data-field=star] {
   text-align: center;
 }
@@ -57,7 +62,8 @@ main {
   text-align: center;
 }
 
-form#create-form {
+form#create-form,
+form#update-form {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 4px;

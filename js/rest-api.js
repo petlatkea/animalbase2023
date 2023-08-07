@@ -45,4 +45,16 @@ async function createAnimal(animal) {
   return response.ok;
 }
 
-export {getAllAnimals, createAnimal};
+async function updateAnimal(animal) {
+  const json = JSON.stringify(animal);
+  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+    method: "PUT",
+    body: json
+  });
+
+  refetchAllAnimals();
+
+  return response.ok;
+}
+
+export {getAllAnimals, createAnimal, updateAnimal};
