@@ -1,4 +1,5 @@
-const endPoint = "http://localhost:4000/animals";
+//const endPoint = "http://localhost:4000/animals";
+const endPoint = "https://petl-animalbase02.azurewebsites.net/animals";
 
 let allAnimals = [];
 let lastFetch = 0;
