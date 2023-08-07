@@ -32,6 +32,15 @@ function prepareData(listOfObjects) {
   return arrayFromObjects;
 }
 
+async function getAnimal(id) {
+  const response = await fetch(`${endPoint}animals/${id}.json`, {
+		method: "GET"
+	});
+
+  const animal = await response.json();
+
+  return animal;
+}
 
 async function createAnimal(animal) {
   const json = JSON.stringify(animal);
@@ -82,4 +91,4 @@ async function deleteAnimal(animal) {
   return response.ok;
 }
 
-export {getAllAnimals, createAnimal, updateAnimal, patchAnimal, deleteAnimal};
+export {getAllAnimals, getAnimal, createAnimal, updateAnimal, patchAnimal, deleteAnimal};

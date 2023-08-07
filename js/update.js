@@ -1,10 +1,15 @@
 import { displayUpdatedList } from "./main.js";
-import { updateAnimal, patchAnimal } from "./rest-api.js";
+import { getAnimal, updateAnimal, patchAnimal } from "./rest-api.js";
 
-function showUpdateDialog(animal) {
+async function showUpdateDialog(animal) {
   const dialog = document.querySelector("dialog#update-dialog");
   const form = document.querySelector("#update-form");
 
+  // Get animal from database - preserve id
+  const id = animal.id;
+  animal = await getAnimal(id);
+  animal.id = id;
+  
   form.name.value = animal.name;
   form.type.value = animal.type;
   form.desc.value = animal.desc;
