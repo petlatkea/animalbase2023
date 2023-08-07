@@ -57,4 +57,19 @@ async function updateAnimal(animal) {
   return response.ok;
 }
 
-export {getAllAnimals, createAnimal, updateAnimal};
+async function patchAnimal(animal, property, value) {
+  const dataObject = {};
+  dataObject[property] = value;
+
+  const json = JSON.stringify(dataObject);
+  const response = await fetch(`${endPoint}animals/${animal.id}.json`, {
+    method: "PATCH",
+    body: json
+  });
+  
+  refetchAllAnimals();
+
+  return response.ok;
+}
+
+export {getAllAnimals, createAnimal, updateAnimal, patchAnimal};

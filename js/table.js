@@ -1,4 +1,4 @@
-import { showUpdateDialog } from "./update.js";
+import { showUpdateDialog, toggleProperty } from "./update.js";
 
 function displayList(animals) {
   document.querySelector("#list tbody").innerHTML = "";
@@ -29,6 +29,14 @@ function displayAnimal(animal) {
     clone.querySelector("[data-field=winner]").textContent = "";
   }
 
+  clone.querySelector("[data-field=winner]").addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleProperty(animal,"winner");
+  } );
+  clone.querySelector("[data-field=star]").addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleProperty(animal,"star");
+  } );
   clone.querySelector("tr").addEventListener("click", () => showUpdateDialog(animal));
 
   // append clone to list

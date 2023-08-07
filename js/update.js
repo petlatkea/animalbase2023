@@ -1,5 +1,5 @@
 import { displayUpdatedList } from "./main.js";
-import { updateAnimal } from "./rest-api.js";
+import { updateAnimal, patchAnimal } from "./rest-api.js";
 
 function showUpdateDialog(animal) {
   const dialog = document.querySelector("dialog#update-dialog");
@@ -37,4 +37,11 @@ async function submitUpdateForm(event,animal) {
   displayUpdatedList();
 }
 
-export {showUpdateDialog};
+async function toggleProperty(animal, property) {
+  animal[property] = !animal[property];
+
+  await patchAnimal(animal, property, animal[property]);
+  displayUpdatedList();
+}
+
+export {showUpdateDialog, toggleProperty};
