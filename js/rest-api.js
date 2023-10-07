@@ -1,5 +1,9 @@
-//const endPoint = "http://localhost:4000/animals";
-const endPoint = "https://petl-animalbase02.azurewebsites.net/animals";
+import Animal from "./model/animal.js";
+
+const endPoint = "http://localhost:4000/animals";
+//const endPoint = "https://petl-animalbase02.azurewebsites.net/animals";
+
+
 
 let allAnimals = [];
 let lastFetch = 0;
@@ -18,7 +22,7 @@ async function getAllAnimals() {
 async function refetchAllAnimals() {
   const response = await fetch(`${endPoint}/`);
   const originalJson = await response.json();
-  allAnimals = originalJson;
+  allAnimals = originalJson.map(jsonObj => new Animal(jsonObj));
 
   lastFetch = Date.now();
 }
@@ -28,7 +32,7 @@ async function getAnimal(id) {
 		method: "GET"
 	});
 
-  const animal = await response.json();
+  const animal = new Animal( await response.json());
 
   return animal;
 }

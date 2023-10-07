@@ -1,24 +1,39 @@
-"use strict";
 import { getAllAnimals } from "./rest-api.js";
-import { displayList } from "./table.js";
 import { selectFilter, filterList } from "./filter.js";
-import { selectSort, sortList } from "./sort.js";
 import { selectSearch, searchList } from "./search.js";
 import { showCreateDialog } from "./create.js";
 
+import ListRenderer from "./view/listrenderer.js";
+import AnimalRenderer from "./view/animalrenderer.js";
+
 window.addEventListener("load", start);
 
-function start() {
+async function start() {
   console.log("JavaScript is running");
+
+  const animals = await getAllAnimals();
+
+  const animalList = new ListRenderer(animals, "#list tbody", AnimalRenderer);
+  animalList.render();
   initializeActionButtons();
 
-  displayUpdatedList();
+  document.querySelectorAll("[data-action='sort']").forEach(button => button.addEventListener("click", 
+  () => {
+    // before sorting - remove .selected from previous selected header
+    document.querySelector("[data-action=sort].selected")?.classList.remove("selected");
+
+    animalList.sort(button.dataset.sortBy, button.dataset.sortDirection);
+    
+    // indicate selected sort header
+    button.classList.add("selected");
+    // indicate sort-direction on button
+    button.dataset.sortDirection = animalList.sortDir;
+  } ));
 }
 
 function initializeActionButtons() {
   document.querySelectorAll("[data-action='filter']").forEach(button => button.addEventListener("click", selectFilter));
 
-  document.querySelectorAll("[data-action='sort']").forEach(button => button.addEventListener("click", selectSort));
 
   document.querySelectorAll("[data-action='search']").forEach(field => {
     field.addEventListener("search", selectSearch); // Non-standard, but included just in case
