@@ -16,34 +16,31 @@ async function start() {
   animalList.render();
   initializeActionButtons();
 
-  document.querySelectorAll("[data-action='sort']").forEach(button => button.addEventListener("click", 
-  () => {
-    // before sorting - remove .selected from previous selected header
-    document.querySelector("[data-action=sort].selected")?.classList.remove("selected");
+  // initialize sort buttons
+  document.querySelectorAll("[data-action='sort']").forEach(button =>
+    button.addEventListener("click", () => {
+      // before sorting - remove .selected from previous selected header
+      document.querySelector("[data-action=sort].selected")?.classList.remove("selected");
 
-    animalList.sort(button.dataset.sortBy, button.dataset.sortDirection);
-    
-    // indicate selected sort header
-    button.classList.add("selected");
-    // indicate sort-direction on button
-    button.dataset.sortDirection = animalList.sortDir;
-  } ));
+      animalList.sort(button.dataset.sortBy, button.dataset.sortDirection);
 
-  document.querySelectorAll("[data-action='filter']").forEach(button => button.addEventListener("click", 
-  () => {
-    const [prop,val] = button.dataset.filter.split(":");
-    animalList.filter(prop, val);
-  }
-  
-  ));
+      // indicate selected sort header
+      button.classList.add("selected");
+      // indicate sort-direction on button
+      button.dataset.sortDirection = animalList.sortDir;
+    })
+  );
 
-
+  // initialize filter buttons
+  document.querySelectorAll("[data-action='filter']").forEach(button =>
+    button.addEventListener("click", () => {
+      const [prop, val] = button.dataset.filter.split(":");
+      animalList.filter(prop, val);
+    })
+  );
 }
 
 function initializeActionButtons() {
-  
-
-
   document.querySelectorAll("[data-action='search']").forEach(field => {
     field.addEventListener("search", selectSearch); // Non-standard, but included just in case
     field.addEventListener("blur", selectSearch);
