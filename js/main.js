@@ -1,5 +1,4 @@
 import { getAllAnimals } from "./rest-api.js";
-import { selectFilter, filterList } from "./filter.js";
 import { selectSearch, searchList } from "./search.js";
 import { showCreateDialog } from "./create.js";
 
@@ -29,10 +28,20 @@ async function start() {
     // indicate sort-direction on button
     button.dataset.sortDirection = animalList.sortDir;
   } ));
+
+  document.querySelectorAll("[data-action='filter']").forEach(button => button.addEventListener("click", 
+  () => {
+    const [prop,val] = button.dataset.filter.split(":");
+    animalList.filter(prop, val);
+  }
+  
+  ));
+
+
 }
 
 function initializeActionButtons() {
-  document.querySelectorAll("[data-action='filter']").forEach(button => button.addEventListener("click", selectFilter));
+  
 
 
   document.querySelectorAll("[data-action='search']").forEach(field => {

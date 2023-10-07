@@ -18,7 +18,11 @@ export default class ListRenderer {
 
   render() {
     this.clear();
-    for (const item of this.list) {
+
+    // create a filtered list to render
+    const filteredList = this.list.filter(item => this.filterProperty === "*" || item[this.filterProperty] == this.filterValue);
+
+    for (const item of filteredList) {
       const html = this.itemRenderer.render(item);
       this.container.insertAdjacentHTML("beforeend", html);
     }
@@ -53,6 +57,13 @@ export default class ListRenderer {
     this.list.sort(sortFunction);
 
     // and re-render the list
+    this.render();
+  }
+
+  filter(filterProperty, filterValue) {
+    this.filterProperty = filterProperty;
+    this.filterValue = filterValue;
+
     this.render();
   }
 }
