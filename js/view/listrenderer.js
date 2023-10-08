@@ -1,4 +1,5 @@
 export default class ListRenderer {
+
   constructor(list, container, itemRenderer) {
     this.list = list;
     this.itemRenderer = new itemRenderer(); // Note: itemRenderer is not the class, but a variable containing the class!
@@ -10,6 +11,16 @@ export default class ListRenderer {
       console.error("Container is not of the required type");
       console.error(container);
     }
+  }
+
+  setList(list) {
+    this.list = list;
+    // reset sortby to avoid toggling direction
+    const sortBy = this.sortBy;
+    this.sortBy = undefined;
+    // and re-sort the new list from the existing settings
+    this.sort(sortBy, this.sortDir);
+
   }
 
   clear() {
