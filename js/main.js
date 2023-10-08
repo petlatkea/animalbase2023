@@ -1,20 +1,47 @@
-import { getAllAnimals } from "./rest-api.js";
 import { selectSearch, searchList } from "./search.js";
-import { showCreateDialog } from "./create.js";
+import * as RESTAPI from "./rest-api.js";
 
 import ListRenderer from "./view/listrenderer.js";
 import AnimalRenderer from "./view/animalrenderer.js";
+import AnimalDialog from "./view/animaldialog.js";
 
 window.addEventListener("load", start);
+
+// model
+let animals = [];
+
+// views
+let animalList = null;
+let createDialog = null;
+
+// controller
+// THIS is the controller ...
+
 
 async function start() {
   console.log("JavaScript is running");
 
-  const animals = await getAllAnimals();
+  // create models
+  animals = await RESTAPI.getAllAnimals();
 
-  const animalList = new ListRenderer(animals, "#list tbody", AnimalRenderer);
+  // create views
+  initializeViews();
+  
+}
+
+// *** VIEWS ***
+
+function initializeViews() {
+  // Create list-component
+  animalList = new ListRenderer(animals, "#list tbody", AnimalRenderer);
   animalList.render();
-  initializeActionButtons();
+
+  // Create dialog-component
+  createDialog = new AnimalDialog("create-dialog");
+  createDialog.render();
+
+  // initialize create-button
+  document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", createDialog.show.bind(createDialog)));
 
   // initialize sort buttons
   document.querySelectorAll("[data-action='sort']").forEach(button =>
@@ -40,6 +67,7 @@ async function start() {
   );
 }
 
+
 function initializeActionButtons() {
   document.querySelectorAll("[data-action='search']").forEach(field => {
     field.addEventListener("search", selectSearch); // Non-standard, but included just in case
@@ -61,4 +89,19 @@ async function displayUpdatedList() {
   displayList(searchedList);
 }
 
-export { displayUpdatedList };
+
+// *** Controller things ***
+
+async function createAnimal(animal) {
+  // call rest-api
+  await RESTAPI.createAnimal(animal);
+
+  // update list
+  animals = await RESTAPI.getAllAnimals();
+  animalList.setList(animals);
+  animalList.render();
+
+}
+
+
+export { displayUpdatedList, createAnimal };
