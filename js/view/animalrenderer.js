@@ -1,4 +1,5 @@
 import ItemRenderer from "./itemrenderer.js";
+import * as controller from "../main.js";
 
 export default class AnimalRenderer extends ItemRenderer {
   render() {
@@ -23,6 +24,10 @@ export default class AnimalRenderer extends ItemRenderer {
       const action = event.target.dataset.action ?? "update";
       console.log(action, this.item);
       // TODO: Handle action
+      if(action == "update") {
+        // ask controller to start update view
+        controller.selectAnimalForUpdate(this.item);
+      }
     } )
   }
 }

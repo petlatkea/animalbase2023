@@ -3,7 +3,8 @@ import * as RESTAPI from "./rest-api.js";
 
 import ListRenderer from "./view/listrenderer.js";
 import AnimalRenderer from "./view/animalrenderer.js";
-import AnimalDialog from "./view/animaldialog.js";
+import AnimalCreateDialog from "./view/animalcreatedialog.js";
+import AnimalUpdateDialog from "./view/animalupdatedialog.js";
 
 window.addEventListener("load", start);
 
@@ -13,6 +14,7 @@ let animals = [];
 // views
 let animalList = null;
 let createDialog = null;
+let updateDialog = null;
 
 // controller
 // THIS is the controller ...
@@ -31,17 +33,24 @@ async function start() {
 
 // *** VIEWS ***
 
+
+
 function initializeViews() {
   // Create list-component
   animalList = new ListRenderer(animals, "#list tbody", AnimalRenderer);
   animalList.render();
 
   // Create dialog-component
-  createDialog = new AnimalDialog("create-dialog");
+  createDialog = new AnimalCreateDialog("create-dialog");
   createDialog.render();
+
+  updateDialog = new AnimalUpdateDialog("update-dialog");
+  updateDialog.render();
 
   // initialize create-button
   document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", createDialog.show.bind(createDialog)));
+
+
 
   // initialize sort buttons
   document.querySelectorAll("[data-action='sort']").forEach(button =>
@@ -103,5 +112,22 @@ async function createAnimal(animal) {
 
 }
 
+function selectAnimalForUpdate(animal) {
+  updateDialog.setAnimal(animal);
+  updateDialog.show();
+}
 
-export { displayUpdatedList, createAnimal };
+async function updateAnimal(animal) {
+  // call rest-api
+  await RESTAPI.updateAnimal(animal);
+
+  // update list
+  animals = await RESTAPI.getAllAnimals();
+  animalList.setList(animals);
+  animalList.render();
+
+}
+
+
+
+export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal};
