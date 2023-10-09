@@ -1,8 +1,8 @@
 export default class ListRenderer {
 
   constructor(list, container, itemRenderer) {
-    this.list = list;
-    this.itemRenderer = new itemRenderer(); // Note: itemRenderer is not the class, but a variable containing the class!
+    
+    this.itemRenderer = itemRenderer; // Only remember the class, not an actual instance
     if (container instanceof Element) {
       this.container = container;
     } else if (typeof container === "string") {
@@ -11,16 +11,17 @@ export default class ListRenderer {
       console.error("Container is not of the required type");
       console.error(container);
     }
+    this.setList(list);
   }
 
   setList(list) {
-    this.list = list;
+    // Build list of renderers with items in them
+    this.list = list.map(item => new this.itemRenderer(item));
     // reset sortby to avoid toggling direction
     const sortBy = this.sortBy;
     this.sortBy = undefined;
     // and re-sort the new list from the existing settings
     this.sort(sortBy, this.sortDir);
-
   }
 
   clear() {
@@ -31,11 +32,16 @@ export default class ListRenderer {
     this.clear();
 
     // create a filtered list to render
-    const filteredList = this.list.filter(item => this.filterProperty === "*" || item[this.filterProperty] == this.filterValue);
+    const filteredList = this.list.filter(item => this.filterProperty === "*" || item.item[this.filterProperty] == this.filterValue);
 
-    for (const item of filteredList) {
-      const html = this.itemRenderer.render(item);
+    for (const itemRenderer of filteredList) {
+      const html = itemRenderer.render();
       this.container.insertAdjacentHTML("beforeend", html);
+
+      if(itemRenderer.postRender) {
+        const element = this.container.lastElementChild;
+        itemRenderer.postRender(element);
+      }
     }
   }
 
@@ -58,11 +64,11 @@ export default class ListRenderer {
     const dir = this.sortDir === "asc" ? 1 : -1;
 
     // NOTE: sortFunctions MUST be arrow-functions, to keep the reference to this!
-    const valueSortFunction = (a,b) => a[this.sortBy] > b[this.sortBy] ? dir : -dir;
-    const stringSortFunction = (a,b) => a[sortBy]?.localeCompare(b[sortBy]) * dir;
+    const valueSortFunction = (a,b) => a.item[this.sortBy] > b.item[this.sortBy] ? dir : -dir;
+    const stringSortFunction = (a,b) => a.item[this.sortBy]?.localeCompare(b.item[this.sortBy]) * dir;
 
     // select between sortFunctions, depending on the type on the sortBy property in the first item in the list
-    const sortFunction = typeof this.list[0][sortBy] === "string" ? stringSortFunction : valueSortFunction;
+    const sortFunction = typeof this.list[0].item[this.sortBy] === "string" ? stringSortFunction : valueSortFunction;
 
     // sort the list with the chosen sortFunction
     this.list.sort(sortFunction);

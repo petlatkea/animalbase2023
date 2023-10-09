@@ -1,8 +1,8 @@
 import ItemRenderer from "./itemrenderer.js";
 
 export default class AnimalRenderer extends ItemRenderer {
-  render(animal) {
-
+  render() {
+    const animal = this.item;
     const html = /*HTML*/`
       <tr>
         <td data-action="toggle" data-field="winner">${animal.winner?"🏆":""}</td>
@@ -15,5 +15,14 @@ export default class AnimalRenderer extends ItemRenderer {
       </tr>`;
 
       return html;
+  }
+
+  postRender(element) {
+    // Add eventListener to element
+    element.addEventListener("click", (event) => {
+      const action = event.target.dataset.action ?? "update";
+      console.log(action, this.item);
+      // TODO: Handle action
+    } )
   }
 }
