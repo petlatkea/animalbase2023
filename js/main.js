@@ -5,6 +5,7 @@ import ListRenderer from "./view/listrenderer.js";
 import AnimalRenderer from "./view/animalrenderer.js";
 import AnimalCreateDialog from "./view/animalcreatedialog.js";
 import AnimalUpdateDialog from "./view/animalupdatedialog.js";
+import ConfirmDeleteDialog from "./view/confirmdeletedialog.js";
 
 window.addEventListener("load", start);
 
@@ -15,6 +16,7 @@ let animals = [];
 let animalList = null;
 let createDialog = null;
 let updateDialog = null;
+let confirmDialog = null;
 
 // controller
 // THIS is the controller ...
@@ -46,6 +48,9 @@ function initializeViews() {
 
   updateDialog = new AnimalUpdateDialog("update-dialog");
   updateDialog.render();
+
+  confirmDialog = new ConfirmDeleteDialog("delete-dialog");
+
 
   // initialize create-button
   document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", createDialog.show.bind(createDialog)));
@@ -133,6 +138,12 @@ async function updateSingleProperty(animal, property) {
   // Do not re-render the entire list for a single property - expect the View to re-render itself!
 }
 
+function confirmDeleteAnimal(animal) {
+  confirmDialog.setAnimal(animal);
+  confirmDialog.render();
+  confirmDialog.show();
+}
+
 async function deleteAnimal(animal) {
   await RESTAPI.deleteAnimal(animal);
 
@@ -142,4 +153,4 @@ async function deleteAnimal(animal) {
    animalList.render();
 }
 
-export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty, deleteAnimal};
+export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty, confirmDeleteAnimal, deleteAnimal};

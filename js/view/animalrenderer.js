@@ -43,7 +43,7 @@ export default class AnimalRenderer extends ItemRenderer {
           this.rerender(element);
         }
       } else if (action == "delete") {
-        controller.deleteAnimal(animal);
+        controller.confirmDeleteAnimal(animal);
       }
     });
   }
