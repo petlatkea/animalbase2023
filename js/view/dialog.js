@@ -7,6 +7,11 @@ export default class Dialog {
     document.querySelector("main").insertAdjacentElement("afterend", this.dialog);
   }
 
+  close() {
+    this.dialog.close();
+    // Should we remove eventlisteners after close?
+  }
+
   show() {
     this.dialog.showModal();
   }
@@ -27,6 +32,9 @@ export default class Dialog {
           case "create": this.create(); break;
           case "submit": this.submit(); break;
           case "update": this.update(); break;
+          case "delete": this.delete(); break;
+          case "cancel": 
+          case "close":  this.close(); break;
           default: console.error("Unknown action: " + action);
         }
       })
