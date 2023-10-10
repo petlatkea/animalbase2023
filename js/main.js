@@ -128,6 +128,9 @@ async function updateAnimal(animal) {
 
 }
 
+async function updateSingleProperty(animal, property) {
+  await RESTAPI.patchAnimal(animal, property, animal[property]);  
+  // Do not re-render the entire list for a single property - expect the View to re-render itself!
+}
 
-
-export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal};
+export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty};

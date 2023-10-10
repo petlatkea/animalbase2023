@@ -20,14 +20,29 @@ export default class AnimalRenderer extends ItemRenderer {
 
   postRender(element) {
     // Add eventListener to element
-    element.addEventListener("click", (event) => {
+    element.addEventListener("click", event => {
       const action = event.target.dataset.action ?? "update";
-      console.log(action, this.item);
-      // TODO: Handle action
-      if(action == "update") {
+      const animal = this.item;
+      // Handle action - as defined in data-action="..."
+      if (action == "update") {
         // ask controller to start update view
-        controller.selectAnimalForUpdate(this.item);
+        controller.selectAnimalForUpdate(animal);
+      } else if (action == "toggle") {
+        // "toggle" actions only updates a single property
+        // and then re-renders the element
+        // the controller isn't expected to re-render the entire list!
+        const field = event.target.dataset.field;
+        if (field === "winner") {
+          animal.toggleWinner();
+          controller.updateSingleProperty(animal, "winner");
+          this.rerender(element);
+        }
+        if (field === "star") {
+          animal.toggleStar();
+          controller.updateSingleProperty(animal, "star");
+          this.rerender(element);
+        }
       }
-    } )
+    });
   }
 }
