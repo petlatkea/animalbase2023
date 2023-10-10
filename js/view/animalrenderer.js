@@ -42,6 +42,8 @@ export default class AnimalRenderer extends ItemRenderer {
           controller.updateSingleProperty(animal, "star");
           this.rerender(element);
         }
+      } else if (action == "delete") {
+        controller.deleteAnimal(animal);
       }
     });
   }

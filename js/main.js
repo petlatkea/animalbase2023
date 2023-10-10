@@ -133,4 +133,13 @@ async function updateSingleProperty(animal, property) {
   // Do not re-render the entire list for a single property - expect the View to re-render itself!
 }
 
-export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty};
+async function deleteAnimal(animal) {
+  await RESTAPI.deleteAnimal(animal);
+
+   // update list
+   animals = await RESTAPI.getAllAnimals();
+   animalList.setList(animals);
+   animalList.render();
+}
+
+export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty, deleteAnimal};
