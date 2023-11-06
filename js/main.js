@@ -6,6 +6,7 @@ import AnimalCreateDialog from "./view/animalcreatedialog.js";
 import AnimalUpdateDialog from "./view/animalupdatedialog.js";
 import ConfirmDeleteDialog from "./view/confirmdeletedialog.js";
 import SearchBox from "./view/searchbox.js";
+import Paginater from "./view/paginater.js";
 
 window.addEventListener("load", start);
 
@@ -40,7 +41,9 @@ async function start() {
 
 function initializeViews() {
   // Create list-component
-  animalList = new ListRenderer(animals, "#list tbody", AnimalRenderer);
+  animalList = new Paginater(animals, "#list", AnimalRenderer, 10);
+  
+//  new ListRenderer(animals, "#list tbody", AnimalRenderer);
   animalList.render();
 
   // Create dialog-component

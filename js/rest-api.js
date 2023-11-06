@@ -19,6 +19,15 @@ async function getAllAnimals() {
   return allAnimals;
 }
 
+async function getSomeAnimals(limit,offset) {
+  const response = await fetch(`${endPoint}?limit=${limit}&offset=${offset}`, {
+		method: "GET"
+	});
+
+  const originalJson = await response.json();
+  return originalJson.map(jsonObj => new Animal(jsonObj));
+}
+
 async function refetchAllAnimals() {
   const response = await fetch(`${endPoint}/`);
   const originalJson = await response.json();
@@ -95,4 +104,4 @@ async function deleteAnimal(animal) {
   return response.ok;
 }
 
-export {getAllAnimals, getAnimal, createAnimal, updateAnimal, patchAnimal, deleteAnimal};
+export {getAllAnimals, getSomeAnimals, getAnimal, createAnimal, updateAnimal, patchAnimal, deleteAnimal};
