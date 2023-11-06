@@ -1,4 +1,3 @@
-import { selectSearch, searchList } from "./search.js";
 import * as RESTAPI from "./rest-api.js";
 
 import ListRenderer from "./view/listrenderer.js";
@@ -6,6 +5,7 @@ import AnimalRenderer from "./view/animalrenderer.js";
 import AnimalCreateDialog from "./view/animalcreatedialog.js";
 import AnimalUpdateDialog from "./view/animalupdatedialog.js";
 import ConfirmDeleteDialog from "./view/confirmdeletedialog.js";
+import SearchBox from "./view/searchbox.js";
 
 window.addEventListener("load", start);
 
@@ -17,6 +17,7 @@ let animalList = null;
 let createDialog = null;
 let updateDialog = null;
 let confirmDialog = null;
+let searchBox = null;
 
 // controller
 // THIS is the controller ...
@@ -51,6 +52,10 @@ function initializeViews() {
 
   confirmDialog = new ConfirmDeleteDialog("delete-dialog");
 
+  searchBox = new SearchBox("search");
+  searchBox.setListToUpdate(animalList);
+  searchBox.render();
+
 
   // initialize create-button
   document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", createDialog.show.bind(createDialog)));
@@ -79,28 +84,6 @@ function initializeViews() {
       animalList.filter(prop, val);
     })
   );
-}
-
-
-function initializeActionButtons() {
-  document.querySelectorAll("[data-action='search']").forEach(field => {
-    field.addEventListener("search", selectSearch); // Non-standard, but included just in case
-    field.addEventListener("blur", selectSearch);
-    field.addEventListener("change", selectSearch);
-    field.addEventListener("keyup", selectSearch);
-  });
-
-  document.querySelectorAll("[data-action='create']").forEach(button => button.addEventListener("click", showCreateDialog));
-}
-
-async function displayUpdatedList() {
-  const animals = await getAllAnimals();
-
-  const sortedList = sortList(animals);
-  const filteredList = filterList(sortedList);
-  const searchedList = searchList(filteredList);
-
-  displayList(searchedList);
 }
 
 
@@ -153,4 +136,4 @@ async function deleteAnimal(animal) {
    animalList.render();
 }
 
-export { displayUpdatedList, createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty, confirmDeleteAnimal, deleteAnimal};
+export { createAnimal , selectAnimalForUpdate, updateAnimal, updateSingleProperty, confirmDeleteAnimal, deleteAnimal};
