@@ -12,6 +12,7 @@ export default class Paginater extends ListRenderer {
     this.renderPageButtons();
   }
 
+  // override parent setList without sorting
   setList(list) {
     // set list without sorting
     if (list) {
@@ -20,9 +21,29 @@ export default class Paginater extends ListRenderer {
     this.render();
   }
 
+  // override parent sort, with only backend sorting
+  sort(sortBy, sortDir) {
+    // if sorting by the same property as last time
+    if (sortBy === this.sortBy) {
+      // Toggle sort direction, ignore what sortDir is given
+      this.sortDir = this.sortDir === "asc" ? "desc" : "asc";
+    } else {
+      if (sortDir) {
+        this.sortDir = sortDir;
+      } else {
+        this.sortDir = "asc";
+      }
+    }
+    // store sortBy in property for next time
+    this.sortBy = sortBy;
+
+    this.setPage(this.page);
+  }
+
   async setPage(page) {
+    this.page = page;
     const offset = (page - 1) * this.itemsPrPage;
-    this.setList(await getSomeAnimals(this.itemsPrPage, offset));
+    this.setList(await getSomeAnimals(this.itemsPrPage, offset, this.sortBy, this.sortDir));
   }
 
   renderPageButtons() {

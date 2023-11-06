@@ -19,10 +19,13 @@ async function getAllAnimals() {
   return allAnimals;
 }
 
-async function getSomeAnimals(limit,offset) {
-  const response = await fetch(`${endPoint}?limit=${limit}&offset=${offset}`, {
-		method: "GET"
-	});
+async function getSomeAnimals(limit,offset,sort,direction) {
+  let response;
+  if(sort) {
+   response = await fetch(`${endPoint}?limit=${limit}&offset=${offset}&sort=${sort}&order=${direction}`, { method: "GET" });
+  } else {
+    response = await fetch(`${endPoint}?limit=${limit}&offset=${offset}`, {	method: "GET"	});
+  }
 
   const originalJson = await response.json();
   return originalJson.map(jsonObj => new Animal(jsonObj));
