@@ -68,7 +68,7 @@ export default class ListRenderer {
     const stringSortFunction = (a,b) => a.item[this.sortBy]?.localeCompare(b.item[this.sortBy]) * dir;
 
     // select between sortFunctions, depending on the type on the sortBy property in the first item in the list
-    const sortFunction = typeof this.list[0].item[this.sortBy] === "string" ? stringSortFunction : valueSortFunction;
+    const sortFunction = typeof this.list[0]?.item[this.sortBy] === "string" ? stringSortFunction : valueSortFunction;
 
     // sort the list with the chosen sortFunction
     this.list.sort(sortFunction);
